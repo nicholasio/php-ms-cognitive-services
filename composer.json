@@ -1,0 +1,21 @@
+{
+    "name": "nicholas_io/php-mscs",
+    "description": "A PHP library that abstracts the Microsoft Cognitive Services API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nícholas André",
+            "email": "nicholas@iotecnologia.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHP_MSCS\\": "src/"
+        }
+    }
+}
