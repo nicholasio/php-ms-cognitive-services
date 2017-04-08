@@ -26,6 +26,34 @@ class ComputerVision extends BasicRequest
      */
     protected $subscription_key_name = ComputerVision::class;
 
+    const VS_DESCRIPTION = 'Description';
+
+    const VS_TAGS = 'Tags';
+
+    const VS_FACES = 'Faces';
+
+    const VS_IMAGE_TYPE = 'ImageType';
+
+    const VS_COLOR = 'Color';
+
+    const VS_ADULT = 'Adult';
+
+    /**
+     * Generates the body of the request
+     *
+     * @param $image
+     *
+     * @return string
+     */
+    protected function buildBody($image)
+    {
+        $body = \GuzzleHttp\json_encode([
+            'url'   => $image
+        ]);
+
+        return $body;
+    }
+
     /**
      * @param $image
      * @param array $visualFeatures
@@ -41,37 +69,87 @@ class ComputerVision extends BasicRequest
             'language'       => $language
         ];
 
-        $body = \GuzzleHttp\json_encode([
-            'url'   => $image
-        ]);
-
-        return new Response($this->sendRequest('analyze', $body, $query_data));
+        return $this->sendRequest('analyze', $this->buildBody($image), $query_data);
     }
 
-    public function describe()
+    /**
+     * @param $image
+     * @param int $maxCandidates
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function describe($image, $maxCandidates = 1)
     {
+        $query_data = [
+            'maxCandidates'  => $maxCandidates,
+        ];
 
+
+        return $this->sendRequest('describe', $this->buildBody($image), $query_data);
     }
 
-    public function thumbnail()
+    /**
+     * @param $image
+     * @param $width
+     * @param $height
+     * @param bool $smartCropping
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function thumbnail($image, $width, $height, $smartCropping = false)
     {
+        $query_data = [
+            'width'     => $width,
+            'height'    => $height,
+            'smartCropping' => $smartCropping,
+        ];
 
+        return $this->sendRequest('generateThumbnail', $this->buildBody($image), $query_data);
     }
 
-    public function ocr()
+    /**
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function models()
     {
-
+        return $this->sendRequest('models', '', '', 'GET');
     }
 
-    public function tagImage()
+    /**
+     * @param $image
+     * @param $language
+     * @param bool $detectOrientation
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function ocr($image, $language, $detectOrientation = false)
     {
+        $query_data = [
+            'language'          => $language,
+            'detectOrientation' => $detectOrientation,
+        ];
 
+        return $this->sendRequest('ocr', $this->buildBody($image), $query_data);
     }
 
-    public function getDomainSpecificModels()
+    /**
+     * @param $image
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function tagImage($image)
     {
-
+        return $this->sendRequest('tag', $this->buildBody($image));
     }
 
-
+    /**
+     * @param $image
+     * @param $model
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function modelAnalysis($image, $model)
+    {
+        return $this->sendRequest(sprintf('models/%s/analyze', $model), $this->buildBody($image));
+    }
 }

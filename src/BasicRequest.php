@@ -41,12 +41,19 @@ class BasicRequest
 
     /**
      * @param $api_method
+     * @param string $body
      * @param string $query_data
+     *
+     * @param bool $http_method
+     *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function sendRequest($api_method, $body, $query_data = '')
+    public function sendRequest($api_method, $body = '', $query_data = '', $http_method = false)
     {
-        return $this->client->request($this->method, $this->endpoint . $api_method, [
+        if (false === $http_method) {
+            $http_method = $this->method;
+        }
+        return $this->client->request($http_method, $this->endpoint . $api_method, [
             'headers'   => $this->client->getMscsHeaders($this->subscription_key_name),
             'query'     => $query_data,
             'body'      => $body

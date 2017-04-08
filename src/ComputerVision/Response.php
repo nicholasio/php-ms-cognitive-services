@@ -9,5 +9,6 @@ class Response
      */
     public function __construct(\GuzzleHttp\Psr7\Response $response)
     {
+		var_dump($response);
     }
 }
