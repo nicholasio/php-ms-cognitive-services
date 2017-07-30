@@ -69,7 +69,7 @@ class ComputerVision extends BasicRequest
             'language'       => $language
         ];
 
-        return $this->sendRequest('analyze', $this->buildBody($image), $query_data);
+        return $this->sendRequest('analyze', $this->buildBody($image), $query_data)->decode();
     }
 
     /**
@@ -84,8 +84,7 @@ class ComputerVision extends BasicRequest
             'maxCandidates'  => $maxCandidates,
         ];
 
-
-        return $this->sendRequest('describe', $this->buildBody($image), $query_data);
+        return $this->sendRequest('describe', $this->buildBody($image), $query_data)->decode();
     }
 
     /**
@@ -98,11 +97,11 @@ class ComputerVision extends BasicRequest
      */
     public function thumbnail($image, $width, $height, $smartCropping = false)
     {
-        $query_data = [
-            'width'     => $width,
-            'height'    => $height,
-            'smartCropping' => $smartCropping,
-        ];
+	    $query_data = [
+		    'width'         => $width,
+		    'height'        => $height,
+		    'smartCropping' => $smartCropping,
+	    ];
 
         return $this->sendRequest('generateThumbnail', $this->buildBody($image), $query_data);
     }
@@ -112,7 +111,7 @@ class ComputerVision extends BasicRequest
      */
     public function models()
     {
-        return $this->sendRequest('models', '', '', 'GET');
+        return $this->sendRequest('models', '', '', 'GET')->decode();
     }
 
     /**
@@ -129,7 +128,7 @@ class ComputerVision extends BasicRequest
             'detectOrientation' => $detectOrientation,
         ];
 
-        return $this->sendRequest('ocr', $this->buildBody($image), $query_data);
+        return $this->sendRequest('ocr', $this->buildBody($image), $query_data)->decode();
     }
 
     /**
@@ -139,7 +138,7 @@ class ComputerVision extends BasicRequest
      */
     public function tagImage($image)
     {
-        return $this->sendRequest('tag', $this->buildBody($image));
+        return $this->sendRequest('tag', $this->buildBody($image))->decode();
     }
 
     /**
@@ -150,6 +149,6 @@ class ComputerVision extends BasicRequest
      */
     public function modelAnalysis($image, $model)
     {
-        return $this->sendRequest(sprintf('models/%s/analyze', $model), $this->buildBody($image));
+        return $this->sendRequest(sprintf('models/%s/analyze', $model), $this->buildBody($image))->decode();
     }
 }

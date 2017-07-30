@@ -21,19 +21,19 @@ try {
         ComputerVision::VS_ADULT,
     ]);
     echo '<pre>';
-    var_dump($response->getBody()->getContents());
+    var_dump($response->getJson());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->describe($image);
-    var_dump($response->getBody()->getContents());
+    var_dump($response->getJson());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->models();
-    var_dump($response->getBody()->getContents());
+    var_dump($response->getJson());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->tagImage($image);
-    var_dump($response->getBody()->getContents());
+    var_dump($response->getJson());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->thumbnail($image, 200, 300);
-    var_dump($response->getBody()->getContents());
+    var_dump($response->getJson());
     echo PHP_EOL . PHP_EOL;
     echo '</pre>';
 } catch (Exception $e) {
