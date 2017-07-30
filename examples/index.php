@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-use PHP_MSCS\ComputerVision\ComputerVision;
+use PHP_MSCS\Vision\ComputerVision;
 
 $dotenv = new Dotenv\Dotenv(__DIR__ );
 $dotenv->load();
@@ -21,21 +21,23 @@ try {
         ComputerVision::VS_ADULT,
     ]);
     echo '<pre>';
-    var_dump($response->getJson());
+    var_dump($response->getData());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->describe($image);
-    var_dump($response->getJson());
+    var_dump($response->getData());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->models();
-    var_dump($response->getJson());
+    var_dump($response->getData());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->tagImage($image);
-    var_dump($response->getJson());
+    var_dump($response->getData());
     echo PHP_EOL . PHP_EOL;
     $response = $cv->thumbnail($image, 200, 300);
-    var_dump($response->getJson());
+    var_dump($response->getData());
     echo PHP_EOL . PHP_EOL;
     echo '</pre>';
+
+
 } catch (Exception $e) {
     var_dump($e->getMessage());
 }

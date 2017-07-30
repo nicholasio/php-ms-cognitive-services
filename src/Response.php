@@ -55,7 +55,7 @@ class Response
     /**
      * @return string
      */
-    public function getJson()
+    public function getData()
     {
         $contents = $this->http_response->getBody()->getContents();
 
