@@ -3,10 +3,13 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use PHP_MSCS\ComputerVision\ComputerVision;
 
+$dotenv = new Dotenv\Dotenv(__DIR__ );
+$dotenv->load();
+
 $client = new \PHP_MSCS\Client();
 
 $client->setSubscriptionKeys([
-    ComputerVision::class => '11b94871ba6046c398adfa6adc2704bf'
+    ComputerVision::class => getenv('COMPUTER_VISION_KEY')
 ]);
 
 $cv = new ComputerVision($client);
