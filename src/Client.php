@@ -25,8 +25,7 @@ class Client extends \GuzzleHttp\Client
 
     public function __construct(array $config = [])
     {
-        if (! isset($config['base_uri']))
-        {
+        if ( ! isset($config['base_uri'])) {
             $config['base_uri'] = 'http://westus.api.cognitive.microsoft.com';
         }
 
@@ -58,9 +57,9 @@ class Client extends \GuzzleHttp\Client
         $headers = $this->mscs_headers;
         $subscription_keys = $this->getSubscriptionKeys();
 
-        if (isset($subscription_keys[$subscription_key]))
-        {
-            $headers['Ocp-Apim-Subscription-Key']  = $subscription_keys[$subscription_key];
+        if (isset($subscription_keys[$subscription_key])) {
+            $headers['Ocp-Apim-Subscription-Key']
+                = $subscription_keys[$subscription_key];
         }
 
         return $headers;

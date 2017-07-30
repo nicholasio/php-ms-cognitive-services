@@ -55,14 +55,19 @@ class BasicRequest
         }
 
         try {
-	        return new Response($this->client->request($http_method, $this->endpoint . $api_method, [
-		        'headers'   => $this->client->getMscsHeaders($this->subscription_key_name),
-		        'query'     => $query_data,
-		        'body'      => $body
-	        ]));
-        } catch ( \Exception $e ) {
+            return new Response(
+                $this->client->request(
+                    $http_method,
+                    $this->endpoint . $api_method,
+                    [
+                        'headers' => $this->client->getMscsHeaders($this->subscription_key_name),
+                        'query'   => $query_data,
+                        'body'    => $body
+                    ]
+                )
+            );
+        } catch (\Exception $e) {
 
         }
-
     }
 }

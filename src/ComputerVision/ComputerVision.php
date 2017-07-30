@@ -1,4 +1,5 @@
 <?php
+
 namespace PHP_MSCS\ComputerVision;
 
 use GuzzleHttp\Psr7\Uri;
@@ -48,32 +49,41 @@ class ComputerVision extends BasicRequest
     protected function buildBody($image)
     {
         $body = \GuzzleHttp\json_encode([
-            'url'   => $image
+            'url' => $image
         ]);
 
         return $body;
     }
 
     /**
-     * @param $image
-     * @param array $visualFeatures
-     * @param array $detail
+     * @param        $image
+     * @param array  $visualFeatures
+     * @param array  $detail
      * @param string $language
+     *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function analyze($image, array $visualFeatures = [], array $detail = [], $language = 'en')
-    {
+    public function analyze(
+        $image,
+        array $visualFeatures = [],
+        array $detail = [],
+        $language = 'en'
+    ) {
         $query_data = [
             'visualFeatures' => implode(',', $visualFeatures),
             'default'        => implode(',', $detail),
             'language'       => $language
         ];
 
-        return $this->sendRequest('analyze', $this->buildBody($image), $query_data)->decode();
+        return $this->sendRequest(
+            'analyze',
+            $this->buildBody($image),
+            $query_data
+        )->decode();
     }
 
     /**
-     * @param $image
+     * @param     $image
      * @param int $maxCandidates
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
@@ -81,29 +91,37 @@ class ComputerVision extends BasicRequest
     public function describe($image, $maxCandidates = 1)
     {
         $query_data = [
-            'maxCandidates'  => $maxCandidates,
+            'maxCandidates' => $maxCandidates,
         ];
 
-        return $this->sendRequest('describe', $this->buildBody($image), $query_data)->decode();
+        return $this->sendRequest(
+            'describe',
+            $this->buildBody($image),
+            $query_data
+        )->decode();
     }
 
     /**
-     * @param $image
-     * @param $width
-     * @param $height
+     * @param      $image
+     * @param      $width
+     * @param      $height
      * @param bool $smartCropping
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
     public function thumbnail($image, $width, $height, $smartCropping = false)
     {
-	    $query_data = [
-		    'width'         => $width,
-		    'height'        => $height,
-		    'smartCropping' => $smartCropping,
-	    ];
+        $query_data = [
+            'width'         => $width,
+            'height'        => $height,
+            'smartCropping' => $smartCropping,
+        ];
 
-        return $this->sendRequest('generateThumbnail', $this->buildBody($image), $query_data);
+        return $this->sendRequest(
+            'generateThumbnail',
+            $this->buildBody($image),
+            $query_data
+        );
     }
 
     /**
@@ -115,8 +133,8 @@ class ComputerVision extends BasicRequest
     }
 
     /**
-     * @param $image
-     * @param $language
+     * @param      $image
+     * @param      $language
      * @param bool $detectOrientation
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
@@ -128,7 +146,11 @@ class ComputerVision extends BasicRequest
             'detectOrientation' => $detectOrientation,
         ];
 
-        return $this->sendRequest('ocr', $this->buildBody($image), $query_data)->decode();
+        return $this->sendRequest(
+            'ocr',
+            $this->buildBody($image),
+            $query_data
+        )->decode();
     }
 
     /**
@@ -149,6 +171,9 @@ class ComputerVision extends BasicRequest
      */
     public function modelAnalysis($image, $model)
     {
-        return $this->sendRequest(sprintf('models/%s/analyze', $model), $this->buildBody($image))->decode();
+        return $this->sendRequest(
+            sprintf('models/%s/analyze', $model),
+            $this->buildBody($image)
+        )->decode();
     }
 }
